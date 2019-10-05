@@ -37,4 +37,37 @@ Criando um arquivo chamado nodemon.json coloca-se o objeto abaixo:
   }
 }
 ```
+<br>
+
+## Usando Docker e o Configurando
+O docker e uma ferramenta usada para isolamento de ambientes de desenvolvimento, como bancos de dados, Sistemas Operacionais entre outros.<br>
+Esse isolamento e chamado de Container.<br>
+Imagem eh um servico disponivel pelo docker
+<br>
+O container eh uma instancia de uma imagem.
+<br> Os registros dessas dependencias sao encontradas no Docker Registry.
+
+Para sabser se o docker esta na maquina:
+``` docker help ```
+
+Para instalar um container postgres usa-se:<br> 
+```docker run --name meetappdb -e POSTGRES_PASSWORD=docker -p 5433:5432 -d postgres```
+
+Onde:<br> 
+```POSTGRESS_PASSWORD= ``` Define a senha do postgres<br>
+```-p 5433:5432 ``` Define a porta de entrada e saida, no caso estao diferentes pois minha maquina ja possui o postgres instalado. <br>
+```-d postgres ``` Define a Imagem usada.
+
+Para saber quais containers estao rodando:
+```docker ps```
+
+Para ver todos os containers:
+```docker ps -a ```
+
+para iniciar o container: 
+```docker start [nomedocontainer]```
+
+para ver os logs:
+``` docker logs [nomedocontainer]```
+
 
