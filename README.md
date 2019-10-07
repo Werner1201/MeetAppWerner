@@ -114,3 +114,133 @@ Ponto de entrada das requisicoes da Aplicacao, uma rota geralmente esta associad
 ### View
 
 Eh o retorno ao cliente, em aplicacoes que nao estao utilizando modelo de API REST isso pode ser um HTML, mas no caso do MeetApp a view eh apenas nosso JSON que sera retornado ao front-end e depois manipulado pelo ReactJS ou React Native
+
+## ESlint, Prettier & EditorConfig
+
+Sao Utilizados para criar um padrao de escrita de codigo entre varios Devs.<br>
+Adicionamos o Eslint como dependencia de desenvolvimento:<br>
+`yarn add eslint -D`<br>
+Depois iniciamos ele:<br>
+`yarn eslint --init`<br>
+Apos isso apague o package-lock criado, e rode um `yarn` na pasta do projeto.<br>
+Nesse processo foi gerado um arquivo chamado ".eslintrc.js" eh onde ficaram as configuracoes dele.<br>
+No vscode eh necessario baixar o complemento.<br>
+Para fazer o ESlint fazer o fix automatico eh necessario passar algumas configs para o arquivo de configuracao do vscode.<br>
+
+```JSON
+"eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    {
+      "language": "javascript",
+      "autoFix": true
+    },
+    {
+      "language": "javascriptreact",
+      "autoFix": true
+    },
+    {
+      "language": "typescript",
+      "autoFix": true
+    },
+    {
+      "language": "typescriptreact",
+      "autoFix": true
+    },
+  ],
+```
+
+<br>Iremos sobreescrever algumas regras do eslintrc:<br>
+
+```javascript
+module.exports = {
+  env: {
+    es6: true,
+    node: true,
+  },
+  extends: ['airbnb-base'],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  rules: {
+    'class-methods-use-this': 'off',
+    'no-param-reassign': 'off',
+    camelcase: 'off',
+    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
+  },
+};
+```
+
+<br>
+
+Adicionamos tambem o Prettier com os complementos para rodar junto do eslint.
+Como dependencia de Desenvolvimento.
+`yarn add prettier eslint-config-prettier eslint-plugin-prettier -D`<br>
+e depois disse mudamos o eslintrc novamente.<br>
+
+```javascript
+module.exports = {
+  env: {
+    es6: true,
+    node: true,
+  },
+  extends: ['airbnb-base', 'prettier'],
+  plugins: ['prettier'],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  rules: {
+    'prettier/prettier': 'error',
+    'class-methods-use-this': 'off',
+    'no-param-reassign': 'off',
+    camelcase: 'off',
+    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
+  },
+};
+```
+
+<br>
+Precisamos editar tambem algumas regras que se sobrepoe.
+<br>No arquivo .prettierrc:
+
+```JSON
+{
+  "singleQuote": true,
+  "trailingComma": "es5"
+}
+```
+
+<br> Para fixar varios arquivos de uma vez usando eslint apenas usamos o comando:<br>
+
+`yarn eslint --fix pasta --ext .js`
+
+<br>
+A ultima ferramenta eh o EditorConfig que eh um modulo do vscode.
+<br>
+criamos um arquivo chamado .editorconfig no menu disponivel na raiz do projeto com o botao direito.
+<br> Essa eh a configuracao do meu:
+
+```
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+```
+
+<br>
+Se o seu se parece com este apenas mude as 2 ultimas instrucoes para true.
