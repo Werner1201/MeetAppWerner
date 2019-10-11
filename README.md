@@ -242,5 +242,67 @@ insert_final_newline = true
 
 ```
 
-<br>
 Se o seu se parece com este apenas mude as 2 ultimas instrucoes para true.
+<br>
+
+## Configurando o Sequelize
+
+### Configuracao de Pastas
+
+Dentro da pasta `./src` criada anteriormente, criaremos uma pasta chamada `./config` <br>
+e dentro dessa pasta colocaremos as configuracoes de conexao com banco de dados em um arquivo chamado
+`database.js` <br>
+Ainda dentro da pasta `./src` criaremos uma pasta chamada `./database` e dentro dela a pasta `./migrations` onde ficaram as configuracoes de criacao de tabelas no banco de dados.
+<br>
+Na Pasta `./src` criaremos uma pasta chamada `./app` onde ficarao todos codigos de regra de negocio.<br>
+Em seguida dentro da pasta `./app` criaremos as pastas `./model` e `./controller`.
+
+### Instalacao do Sequelize
+
+No terminal iremos digitar os comandos: <br>
+`yarn add sequelize`: para adicionar o sequelize ao projeto. <br>
+`yarn add sequelize-cli -D`: para adicionar a ferramenta executavel do sequelize como dependencia de desenvolvimento.<br>
+
+Criaremos um arquivo na raiz do projeto com o nome `.sequelizerc` que eh onde poderemos "exportar" os caminhos dos arquivos de configuracao de conexao e de criacao de migrations.<br>
+Neste arquivo apenas podemos utilizar a sintaxe de importacao do CommomJS (require).
+<br>
+
+O arquivo de se parecer com isso:
+
+```javascript
+const { resolve } = require('path');
+
+module.exports = {
+  config: resolve(__dirname, 'src', 'config', 'database.js'),
+  'models-path': resolve(__dirname, 'src', 'app', 'models'),
+  'migrations-path': resolve(__dirname, 'src', 'database', 'migrations'),
+  'seeders-path': resolve(__dirname, 'src', 'database', 'seeds'),
+};
+```
+
+<br>
+
+Apos isso, configuraremos o arquivo `./src/config/database.js`.<br>
+Para configuracao do dialeto do banco de dados postgres, precisamos instalar estas dependencias:
+`yarn add pg pg-hstore`. <br>
+
+Se voce seguiu as instrucoes corretamente ate aqui, seu arquivo de database deve estar semelhante a isso: <br>
+
+```javascript
+module.exports = {
+  dialect: 'postgres',
+  host: 'localhost',
+  username: 'postgres',
+  password: 'docker',
+  database: 'meetapp',
+  define: {
+    timestamps: true,
+    underscored: true,
+    underscoredAll: true,
+  },
+};
+```
+
+<br>
+As regras de timestamps sao para mostrar quando um registro foi alterado, underscored e underscoredAll sao para enforcar que as tabelas criadas sejam criadas nome_da_tabela e nao NomeDaTabela.
+<br>
